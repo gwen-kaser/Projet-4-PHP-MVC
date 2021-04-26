@@ -1,51 +1,68 @@
 <?php $title = htmlspecialchars($post['title']); ?>
 
 <?php ob_start(); ?>
-<h1>Mon blog !</h1>
-<p><a href="index.php">Retour à la liste des billets</a></p>
 
-<div class="news">
-    <h3>
-        <?= htmlspecialchars($post['title']) ?>
-        <em>le <?= $post['creation_date_fr'] ?></em>
-    </h3>
-    
-    <p>
-    
-        <?= nl2br(htmlspecialchars($post['content'])) ?>
-            
-    </p>
-</div>
+    <div class="jumbotron bg-white">
+        <div class="row text-center text-danger">
+            <div class="col">
+                <h1 class="font-weight-light">Un billet simple pour l'Alaska</h1>
+                <h2 class="font-weight-light font-italic">de Jean Forteroche, auteur et écrivain</h2>
+            </div>
+        </div>
+    </div>
+    <div class="ml-5">
+    <p><a href="index.php">Retour à la liste des billets</a></p>
+    </div>
 
-<h2>Commentaires</h2>
-
+    <div class="container"> 
+        <div class="row text-center text-danger bg-info pt-4 pb-4">
+            <div class="col-12">
+                <div class="card border-danger shadow">
+                    <div class="card-body">
+                        <h3 class="card-title font-weight-light"><?= htmlspecialchars($post['title']) ?><h3>
+                        <em>le <?= $post['creation_date_fr'] ?></em>
+                        <p class="card-text font-weight-light"><?= nl2br(htmlspecialchars($post['content'])) ?></p>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="col-12 mt-5">
 <?php
 while ($comment = $comments->fetch())
 {
 ?>
-    <p><strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?></p>
-    <p><?= nl2br(htmlspecialchars($comment['comment'])) ?></p>
-    <em><strong><a href="index.php?action=viewComment&amp;id=<?= $comment['id'] ?>&postId=<?= $post['id']?>">Modifier</a></strong></em><br/>
-    <em><strong><a href= "index.php?action=deleteComment&amp;id=<?= $comment['id']?>&postId=<?= $post['id']?>">Supprimer</a></strong></em>
+                <p><strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?></p>
+                <p><?= nl2br(htmlspecialchars($comment['comment'])) ?></p>
+                <em><strong><a href="index.php?action=viewComment&amp;id=<?= $comment['id'] ?>&postId=<?= $post['id']?>">Modifier</a></strong></em><br/>
+                <em><strong><a href= "index.php?action=deleteComment&amp;id=<?= $comment['id']?>&postId=<?= $post['id']?>">Supprimer</a></strong></em><br/><br/>
 <?php
 }
 ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row py-5 mt-5 justify-content-center text-danger border border-danger">
+            <div class="col-12 col-md-6 col-lg-4 py-5">
+                <h3 class="font-weight-light">Ajoutez votre commentaire !</h3>
+                <hr class="border border-danger"><br/>
+                <form action="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
+                    <div>
+                        <label for="author">Auteur</label><br/>
+                        <input type="text" id="author" name="author"><br/><br/>
+                    </div>
+                    <div>
+                        <label for="comment">Commentaire</label><br/>
+                        <textarea id="comment" name="comment"></textarea><br/><br/>
+                    </div>
+                    <div>
+                        <input type="submit"class="btn btn-outline-danger btn-sm shadow">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 <?php $content = ob_get_clean(); ?>
-
 <?php require('template.php'); ?>
-
-<h2>Ajouter votre commentaire !</h2>
-
-<form action="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
-    <div>
-        <label for="author">Auteur</label><br />
-        <input type="text" id="author" name="author" />
-    </div>
-    <div>
-        <label for="comment">Commentaire</label><br />
-        <textarea id="comment" name="comment"></textarea>
-    </div>
-    <div>
-        <input type="submit" />
-    </div>
-</form>
