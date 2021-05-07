@@ -1,8 +1,17 @@
 <?php $title = 'Jean Forteroche'; ?>
 
 <?php ob_start(); ?>
+    
+    <div class="jumbotron bg-white">
+        <div class="row text-center text-danger">
+            <div class="col">
+                <h1 class="font-weight-light">Billet simple pour l'Alaska</h1>
+                <h2 class="font-weight-light font-italic">de Jean Forteroche, auteur et écrivain</h2>
+            </div>
+        </div>
+    </div>
 
-<div class="container pb-4">
+    <div class="container pb-4">
         <div class="row mt-5 justify-content-center text-danger border border-danger">
             <div class="col-12 col-md-6 col-lg-4 py-5">
                 <h3 class="font-weight-light">Ajoutez votre chapitre !</h3>

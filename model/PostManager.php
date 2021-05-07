@@ -38,14 +38,5 @@ class PostManager extends Manager
         return $req;
     }
 
-    public function editPost()
-    {
-        $db = $this->dbConnect();
-        $posts= $db->prepare('UPDATE posts SET post = ?, create_date = NOW () WHERE id = ?');
-        $posts->execute(array($title, $content));
-
-        return $db->lastInsertId();
-    }
-
 }
 

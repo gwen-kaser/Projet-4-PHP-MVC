@@ -74,6 +74,9 @@ while ($data = $posts->fetch())
 } // Fin de la boucle des billets
 $posts->closeCursor();
 ?>
+    <div class="text-center">
+        <a class="btn btn-info border-danger btn-sm shadow" href="index.php?action=viewPost" role="button">Ajoutez votre chapitre</a>
+    </div>
 
 <?php $content = ob_get_clean(); ?>
 

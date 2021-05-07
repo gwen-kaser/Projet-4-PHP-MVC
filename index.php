@@ -76,17 +76,7 @@ try {
         if ($_GET['action'] == 'viewPost') {
             viewPost();
         }
-
-        elseif ($_GET['action'] == 'updatePost') {
-            if (!empty($_POST['title']) && !empty($_POST['content'])) {
-                updatePost($_POST['title'], $_POST['content']);
-            }
-            else {
-                throw new Exeption('Tous les champs ne sont pas remplis !');
-            }
-        }
-
-
+    
     }
     else {
         listPosts();
