@@ -71,6 +71,44 @@ function deleteCom($id)
     
 }
 
+function addPost ($title, $author, $content)
+{
+    $postManager = new PostManager();
+
+    $id = $postManager->newPost($title, $author, $content);
+    
+    if ($id === false) {
+        throw new Exeption('Impossible d\'ajouter le post !');
+    }
+    else {
+        header('Location: index.php?action=post&id=' . $id);
+    }
+}
+
+function viewPost ()
+{
+    $postManager = new PostManager();
+
+    require('view/frontend/editPostView.php');
+}
+
+function updatePost ($title, $content)
+{
+    $postManager = new PostManager();
+
+    $id = $postManager ->editPost($title, $content);
+
+    if ($id === false) {
+        throw new Exeption('Impossible de modifier le chapitre !');
+    }
+    else {
+        header('location: index.php?action=post&id=' .$id);
+    }
+}
+
+
+
+
 
 
 

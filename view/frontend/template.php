@@ -18,23 +18,12 @@
                 <div class="container">
                     <div class="row">
                         <nav class="col navbar navbar-expend-lg navbar-dark">
-                            <a class="navbar-brand font-weight-light" href="homeView.php">Jean Forteroche</a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div id="navbarContent" class="collapse navbar-collapse">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item active">
-                                        <a class="nav-link" href="homeView.php">Accueil</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Chapitres</a>
-                                    </li>
+                            <a class="navbar-brand font-weight-light" href="index.php">Jean Forteroche</a>
+                            <ul class="navbar-nav">
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">Se connecter</a>
                                     </li>
-                                </ul>
-                            </div>
+                            </ul>
                         </nav>
                     </div>
                 </div>
