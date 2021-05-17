@@ -76,7 +76,26 @@ try {
         if ($_GET['action'] == 'viewPost') {
             viewPost();
         }
-    
+
+        elseif ($_GET['action'] == 'editPost') {
+            if (!empty($_POST['title']) && !empty($_POST['author']) && !empty($_POST['content'])) {
+                editPost($_GET['id'], $_POST['title'], $_POST['author'], $_POST['content']);
+            }
+            else {
+                throw new Exeption('Tous les champs ne sont pas remplis !');
+            }
+        }
+
+        elseif ($_GET['action'] == 'postViewEdit') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                postViewEdit();
+            }
+            else {
+                throw new Exception ('Aucun identifiant de billet envoyé');
+            }
+        }
+        
+
     }
     else {
         listPosts();

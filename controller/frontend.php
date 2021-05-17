@@ -89,6 +89,26 @@ function viewPost ()
 {
     $postManager = new PostManager();
 
+    require('view/frontend/addPostView.php');
+}
+
+function editPost ($id, $title, $author, $content)
+{
+    $postManager = new PostManager();
+
+    $postManager ->updatePost($id, $title, $author, $content);
+
+    
+    header('location: index.php?action=post&id=' .$id);
+    
+}
+
+function postViewEdit ()
+{
+    $postManager = new PostManager();
+
+    $post = $postManager->getPost($_GET['id']);
+
     require('view/frontend/editPostView.php');
 }
 
