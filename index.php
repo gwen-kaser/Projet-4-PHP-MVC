@@ -94,6 +94,10 @@ try {
                 throw new Exception ('Aucun identifiant de billet envoyé');
             }
         }
+
+        elseif ($_GET['action'] == 'deletePost') {
+                deletePost($_GET['id']);
+        }
         
 
     }

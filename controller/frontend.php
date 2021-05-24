@@ -112,6 +112,17 @@ function postViewEdit ()
     require('view/frontend/editPostView.php');
 }
 
+function deletePost($id)
+{
+    $postManager = new PostManager();
+    
+    $deletedLines = $postManager->deletePost($id);
+
+    header('Location: index.php');
+}
+
+
+
 
 
 

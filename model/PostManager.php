@@ -30,19 +30,20 @@ class PostManager extends Manager
         return $db->lastInsertId();
     }
 
-    public function goPost()
-    {
-        $db = $this->dpConnect();
-        $req = $db->query('SELECT title, author, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creaction_date_fr FROM posts WHERE id = ?');
-        
-        return $req;
-    }
-
     public function updatePost($id, $title, $author, $content)
     {
         $db = $this->dbConnect();
-        $posts= $db->prepare('UPDATE posts SET title = ?, author = ?, content= ? WHERE id = ?');
+        $posts = $db->prepare('UPDATE posts SET title = ?, author = ?, content= ? WHERE id = ?');
         $posts->execute(array($title, $author, $content, $id));
+    }
+
+    public function deletePost($id)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('DELETE FROM posts WHERE id = ?');
+        $deletedLines = $req->execute(array($id));
+
+        return $deletedLines;
     }
 
 }
