@@ -98,6 +98,12 @@ try {
         elseif ($_GET['action'] == 'deletePost') {
                 deletePost($_GET['id']);
         }
+
+        elseif ($_GET['action'] == 'listPostsAdmin') {
+            if (isset($_GET['action'])) {
+                listPostsAdmin();
+            }
+        }
         
 
     }

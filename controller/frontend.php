@@ -7,6 +7,7 @@ require_once('model/CommentManager.php');
 function listPosts()
 {
     $postManager = new PostManager(); // Création d'un objet
+    
     $posts = $postManager->getPosts(); // Appel d'une fonction de cet objet
 
     require('view/frontend/listPostsView.php');
@@ -81,7 +82,7 @@ function addPost ($title, $author, $content)
         throw new Exeption('Impossible d\'ajouter le post !');
     }
     else {
-        header('Location: index.php?action=post&id=' . $id);
+        header('Location: index.php?action=listPostsAdmin'); 
     }
 }
 
@@ -97,9 +98,8 @@ function editPost ($id, $title, $author, $content)
     $postManager = new PostManager();
 
     $postManager ->updatePost($id, $title, $author, $content);
-
     
-    header('location: index.php?action=post&id=' .$id);
+    header('location: index.php?action=listPostsAdmin');
     
 }
 
@@ -118,9 +118,17 @@ function deletePost($id)
     
     $deletedLines = $postManager->deletePost($id);
 
-    header('Location: index.php');
+    header('Location: index.php?action=listPostsAdmin');
 }
 
+function listPostsAdmin()
+{
+    $postManager = new PostManager();
+
+    $posts = $postManager->getPosts();
+
+    require('view/frontend/listPostsAdmin.php');
+}
 
 
 
