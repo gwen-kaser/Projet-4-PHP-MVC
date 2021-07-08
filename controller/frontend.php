@@ -159,4 +159,32 @@ function connexionUser($pseudo, $pass)
     }
 }
 
+function registration()
+{
+   require('view/frontend/registration.php');
+}
+
+function saveUser($pseudo, $pass, $email)
+{
+    $memberManager = new MemberManager();
+
+    $passHache = password_hash($pass, PASSWORD_DEFAULT);
+    
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errorEmail = 'Votre email est invalide';
+        require('view/frontend/registration.php');
+    } elseif (strlen($pass) < 5) {
+        $errorPassword = 'Votre mot de passe doit contenir minimum 5 caractères';
+        require('view/frontend/registration.php');
+    } elseif ($_POST['pass']!== $_POST['pass2']) {
+        $errorPassword = 'mots de passes pas identiques';
+        require('view/frontend/registration.php');
+        
+    } elseif($memberManager->saveUser($pseudo, $passHache, $email)) {
+        header('location: index.php?action=listPosts');
+    } else {
+        $errorEmail = 'Votre email est déjà utilisé';
+        require('view/frontend/registration.php');
+    }                
+}
 

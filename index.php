@@ -126,6 +126,18 @@ try {
             }
         }
 
+        if ($_GET['action'] == 'registration') {
+            registration();
+        }
+
+        elseif ($_GET['action'] == 'saveUser') {
+            if (isset($_POST['pseudo']) && isset($_POST['pass']) && isset($_POST['email'])) {
+                saveUser($_POST['pseudo'], $_POST['pass'], $_POST['email']);
+            }
+            else {
+                throw new Exception('Tous les champs ne sont pas remplis !');
+            }
+        }
         
     }
     else {

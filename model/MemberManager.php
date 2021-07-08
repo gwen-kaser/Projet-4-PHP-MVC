@@ -10,5 +10,12 @@ class MemberManager extends Manager
         $req->execute(array($pseudo));
         return $req->fetch();
     }
+    
+    public function saveUser($pseudo, $passHache, $email)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('INSERT INTO membres(pseudo, pass, email, date_inscription) VALUES(?, ?, ?, CURDATE())');
+        return $req->execute(array($pseudo, $passHache, $email));
+    }
 
 } 
