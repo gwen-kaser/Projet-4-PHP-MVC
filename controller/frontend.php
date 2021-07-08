@@ -32,6 +32,11 @@ function viewAddComment()
 
 function addComment($postId, $author, $comment)
 {
+    if(!isset($_SESSION['id'])) {
+        header('Location: index.php?action=connexion');
+        die();
+    }
+    
     $commentManager = new CommentManager();
 
     $affectedLines = $commentManager->postComment($postId, $author, $comment);
@@ -75,7 +80,7 @@ function deleteCom($id)
     $delete = $commentManager->deleteComment($id);
 
     header('Location: index.php?action=post&id=' . $_GET['postId']);
-    
+
 }
 
 function viewAddPost ()
@@ -155,6 +160,7 @@ function connexionUser($pseudo, $pass)
     } else {        
         $_SESSION['id'] = $resultat['id'];
         $_SESSION['pseudo'] = $_POST['pseudo'];
+        $_SESSION['admin'] = $resultat['admin'];
         header('location: index.php?action=listPosts');
     }
 }
