@@ -3,6 +3,7 @@
 // Chargement des classes
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
+require_once('model/MemberManager.php');
 
 function listPosts()
 {
@@ -24,6 +25,11 @@ function post()
     require('view/frontend/postView.php');
 }
 
+function viewAddComment()
+{
+    require('view/frontend/addCommentView.php');
+}
+
 function addComment($postId, $author, $comment)
 {
     $commentManager = new CommentManager();
@@ -38,7 +44,7 @@ function addComment($postId, $author, $comment)
     }
 }
 
-function viewComment()
+function viewEditComment()
 {
     $commentManager = new CommentManager();
 
@@ -72,6 +78,11 @@ function deleteCom($id)
     
 }
 
+function viewAddPost ()
+{
+    require('view/frontend/addPostView.php');
+}
+
 function addPost ($title, $author, $content)
 {
     $postManager = new PostManager();
@@ -86,11 +97,13 @@ function addPost ($title, $author, $content)
     }
 }
 
-function viewPost ()
+function viewEditPost ()
 {
     $postManager = new PostManager();
 
-    require('view/frontend/addPostView.php');
+    $post = $postManager->getPost($_GET['id']);
+
+    require('view/frontend/editPostView.php');
 }
 
 function editPost ($id, $title, $author, $content)
@@ -100,16 +113,6 @@ function editPost ($id, $title, $author, $content)
     $postManager ->updatePost($id, $title, $author, $content);
     
     header('location: index.php?action=listPostsAdmin');
-    
-}
-
-function postViewEdit ()
-{
-    $postManager = new PostManager();
-
-    $post = $postManager->getPost($_GET['id']);
-
-    require('view/frontend/editPostView.php');
 }
 
 function deletePost($id)
@@ -130,10 +133,30 @@ function listPostsAdmin()
     require('view/frontend/listPostsAdmin.php');
 }
 
+function connexion()
+{
+    require('view/frontend/connexion.php');
+}
 
+function connexionUser($pseudo, $pass)
+{
+    $memberManager = new MemberManager();
+    
+    $resultat = $memberManager->connexionUser($pseudo, $pass);
+    
+    $isPasswordCorrect = password_verify($_POST['pass'], $resultat['pass']);
 
-
-
-
+    if (!$resultat) {
+        $errorPseudo = 'Erreur d\'identifiant ou mot de passe';
+        require('view/frontend/connexion.php');
+    } elseif (!$isPasswordCorrect) {
+        $errorPassword = 'Erreur d\'identifiant ou mot de passe';
+        require('view/frontend/connexion.php');
+    } else {        
+        $_SESSION['id'] = $resultat['id'];
+        $_SESSION['pseudo'] = $_POST['pseudo'];
+        header('location: index.php?action=listPosts');
+    }
+}
 
 

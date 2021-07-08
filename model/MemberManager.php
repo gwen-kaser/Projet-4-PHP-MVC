@@ -1,18 +1,14 @@
 <?php
 require_once("model/Manager.php");
 
-class MemberSpaceManager extends Manager 
+class MemberManager extends Manager 
 {
-    public function registration()
+    public function connexionUser($pseudo, $pass)
     {
-        $db = dbConnect();
-        $req = $bdd->prepare('INSERT INTO membres(pseudo, pass, email, date_inscription) VALUES(:pseudo, :pass, :email, CURDATE())');
-        $req->execute (array(
-        'pseudo' => $_POST['pseudo'],
-        'pass' => $pass_hache,
-        'email' => $_POST['email']));   
-}
-
+        $db = $this->dbConnect();
+        $req = $db->prepare('SELECT id, pass FROM membres WHERE pseudo = ?');
+        $req->execute(array($pseudo));
+        return $req->fetch();
     }
 
-}
+} 

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('controller/frontend.php');
 
 try {
@@ -13,6 +14,12 @@ try {
             }
             else {
                 throw new Exception ('Aucun identifiant de billet envoyé');
+            }
+        }
+
+        elseif ($_GET['action'] == 'viewAddComment') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                viewAddComment();
             }
         }
         
@@ -30,9 +37,9 @@ try {
             }
         }
         
-        elseif ($_GET['action'] == 'viewComment') {
+        elseif ($_GET['action'] == 'viewEditComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                viewComment();
+                viewEditComment();
             }
             else {
                 throw new Exeption('Aucun commentaire trouvé !');
@@ -63,6 +70,10 @@ try {
                 }
             }
         }
+
+        if ($_GET['action'] == 'viewAddPost') {
+            viewAddPost();
+        }
         
         elseif ($_GET['action'] == 'addPost') {
             if (!empty($_POST['title']) && !empty($_POST['author']) && !empty($_POST['content'])) {
@@ -73,8 +84,13 @@ try {
             }
         }
 
-        if ($_GET['action'] == 'viewPost') {
-            viewPost();
+        elseif ($_GET['action'] == 'viewEditPost') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                viewEditPost();
+            }
+            else {
+                throw new Exception ('Aucun identifiant de billet envoyé');
+            }
         }
 
         elseif ($_GET['action'] == 'editPost') {
@@ -86,17 +102,8 @@ try {
             }
         }
 
-        elseif ($_GET['action'] == 'postViewEdit') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                postViewEdit();
-            }
-            else {
-                throw new Exception ('Aucun identifiant de billet envoyé');
-            }
-        }
-
         elseif ($_GET['action'] == 'deletePost') {
-                deletePost($_GET['id']);
+            deletePost($_GET['id']);
         }
 
         elseif ($_GET['action'] == 'listPostsAdmin') {
@@ -104,8 +111,22 @@ try {
                 listPostsAdmin();
             }
         }
-        
 
+        if ($_GET['action'] == 'connexion') {
+            connexion();
+        }
+
+        elseif ($_GET['action']== 'connexionUser') {
+            if (isset($_POST['pseudo']) && isset($_POST['pass'])) {
+                connexionUser($_POST['pseudo'], $_POST['pass']);
+                
+            }
+            else {
+                throw new Exception('Tous les champs ne sont pas remplis !');
+            }
+        }
+
+        
     }
     else {
         listPosts();
