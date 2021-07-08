@@ -6,7 +6,7 @@ class MemberManager extends Manager
     public function connexionUser($pseudo, $pass)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, pass FROM membres WHERE pseudo = ?');
+        $req = $db->prepare('SELECT id, pass, admin FROM membres WHERE pseudo = ?');
         $req->execute(array($pseudo));
         return $req->fetch();
     }

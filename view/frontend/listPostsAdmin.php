@@ -1,15 +1,18 @@
-<?php $title = 'Jean Forteroche'; ?>
+<?php $title = 'Admin'; ?>
 
 <?php ob_start(); ?>
 
-    <div class="jumbotron" style="background: url(public/images/slider-2.jpg) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+    <div class="jumbotron" style="background: url(public/images/slider-2.jpg) no-repeat center center fixed; background-size: cover;" alt="Paysage Alaska">
         <div class="row py-5 text-center text-white">
             <div class="col">
-                <h1 class="font-weight-light">Billet simple pour l'Alaska</h1>
-                <h2 class="font-weight-light font-italic">de Jean Forteroche, auteur et écrivain</h2></br>
-                <h3 class="font-weight-light">Vous pouvez supprimer, modifier et ajouter un chapitre</h3>
+                <h2 class="display-4 font-weight-light">Billet simple pour l'Alaska</h2>
+                <h3 class="font-weight-light font-italic">de Jean Forteroche, auteur et écrivain</h3></br>
+                <h4 class="font-weight-light">Vous pouvez<span class="font-italic"> supprimer, modifier et ajouter</span> un chapitre</h4>
             </div>
         </div>
+    </div>
+    <div class="container">
+        <p><a class="font-weight-light font-italic text-info" href= "index.php">Retour page d'accueil</a></p>
     </div>
 
 <?php
@@ -17,19 +20,19 @@ while ($data = $posts->fetch())
 {
 ?>
     <div class="container pb-5"> 
-        <div class="row text-center text-danger bg-info mb-3">
+        <div class="row text-center text-danger bg-danger mb-3">
             <div class="col-12">
                 <div class="card border-danger shadow">
                     <div class="card-body">
-                        <h3 class="card-title font-weight-light"><?= htmlspecialchars($data['title']) ?><br/></h3>
+                        <h3 class="card-title font-weight-light"><?= htmlspecialchars($data['title']) ?></h3><br/>
                         <p class="font-weight-light font-italic text-info">
                         par <?= strtoupper($data['author']) ?>
                         le <?= $data['creation_date_fr'] ?>
                         </p>
                         <p class="card-text"><?= nl2br(htmlspecialchars($data['content'])) ?></p><br/>
                         <p>
-                        <a class="font-italic text-info" href="index.php?action=postViewEdit&amp;id=<?= $data['id'] ?>">Modifier</a> |
-                        <a class="font-italic text-info" href= "index.php?action=deletePost&amp;id=<?= $data['id']?>">Supprimer</a>
+                        <a class="font-weight-light font-italic text-info" href="index.php?action=viewEditPost&amp;id=<?= $data['id'] ?>">Modifier</a> |
+                        <a class="font-weight-light font-italic text-info" href= "index.php?action=deletePost&amp;id=<?= $data['id']?>">Supprimer</a>
                         </p>
                     </div>
                 </div>
@@ -41,10 +44,9 @@ while ($data = $posts->fetch())
 $posts->closeCursor();
 ?>
     <div class="text-center">
-        <a class="btn btn-info border-danger btn-sm shadow" href="index.php?action=viewPost">Ajouter un chapitre</a>
+        <a href="index.php?action=viewAddPost"><input class="text-white btn-info btn-sm shadow" type="button" value="Ajouter un chapitre"></a>
     </div>
    
-
 <?php $content = ob_get_clean(); ?>
 
 <?php require('template.php'); ?>

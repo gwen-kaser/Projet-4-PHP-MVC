@@ -21,8 +21,7 @@
                             <a class="navbar-brand font-weight-light" href="index.php">Jean Forteroche</a>
                             <ul class="navbar-nav">
                                 <div class="text-white font-weight-light">
-                                    <?php if (isset($_SESSION['id']) AND isset($_SESSION['pseudo']))
-                                    {?>
+                                    <?php if (isset($_SESSION['id']) AND isset($_SESSION['pseudo'])) {?>
                                         Bonjour <?= $_SESSION['pseudo'];?>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="index.php?action=deconnexion">Se deconnecter</a>
@@ -32,6 +31,12 @@
                                                 <a class="nav-link" href="index.php?action=connexion">Se connecter</a>
                                             </li>
                                     <?php }?>
+                                    <?php if (isset($_SESSION['admin']) && isset($_SESSION['admin'])) {?>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="index.php?action=listPostsAdmin">Administrateur</a>
+                                            </li>
+                                    <?php }?>
+                                        
                                 </div>
                             </ul>
                         </nav>
