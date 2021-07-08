@@ -188,3 +188,9 @@ function saveUser($pseudo, $pass, $email)
     }                
 }
 
+function deconnexion()
+{
+    $_SESSION = array();
+    session_destroy();
+    header('location: index.php?action=listPosts');
+}

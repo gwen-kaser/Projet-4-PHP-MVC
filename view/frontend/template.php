@@ -20,9 +20,19 @@
                         <nav class="col navbar navbar-expend-lg navbar-dark">
                             <a class="navbar-brand font-weight-light" href="index.php">Jean Forteroche</a>
                             <ul class="navbar-nav">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Se connecter</a>
-                                    </li>
+                                <div class="text-white font-weight-light">
+                                    <?php if (isset($_SESSION['id']) AND isset($_SESSION['pseudo']))
+                                    {?>
+                                        Bonjour <?= $_SESSION['pseudo'];?>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="index.php?action=deconnexion">Se deconnecter</a>
+                                            </li>
+                                    <?php  } else { ?>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="index.php?action=connexion">Se connecter</a>
+                                            </li>
+                                    <?php }?>
+                                </div>
                             </ul>
                         </nav>
                     </div>
@@ -48,8 +58,8 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-info link text-danger text-center py-2">
-                <a href="#">Mention légale</a>
+            <div class="link bg-info text-white text-center py-3">
+                <a class="text-white" href="#">Paramètres des cookies</a> | <a class="text-white" href="#">Politique de confidentialité et utilisation des cookies</a> | <a class="text-white" href="#">Mention légale</a>
             </div>
         </footer>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
