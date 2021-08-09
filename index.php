@@ -1,6 +1,8 @@
 <?php
 session_start();
-require('controller/frontend.php');
+require('controller/admin.php');
+require('controller/blog.php');
+require('controller/member.php');
 
 try {
     if (isset($_GET['action'])) {
@@ -25,8 +27,8 @@ try {
         
         elseif ($_GET['action'] == 'addComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                if (!empty($_POST['author']) && !empty($_POST['comment'])) {
-                    addComment($_GET['id'], $_POST['author'], $_POST['comment']);
+                if (!empty($_SESSION['id']) && !empty($_POST['comment'])) {
+                    addComment($_GET['id'], $_SESSION['id'], $_POST['comment']);
                 }
                 else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
@@ -107,9 +109,21 @@ try {
         }
 
         elseif ($_GET['action'] == 'listPostsAdmin') {
-            if (isset($_GET['action'])) {
-                listPostsAdmin();
+            listPostsAdmin();
+        }
+
+        elseif ($_GET['action'] == 'reportedCommentAdmin') {
+            reportedCommentAdmin();
+        }
+
+        elseif ($_GET['action'] == 'postReport') {
+            if (isset($_GET['id']) && isset($_GET['postId'])) {
+                postReport($_GET['id'], $_GET['postId']);
             }
+        }
+
+        elseif ($_GET['action'] == 'deleteReport') {
+            deleteReport($_GET['id']);
         }
 
         if ($_GET['action'] == 'connexion') {
