@@ -1,16 +1,17 @@
 <?php
-require_once("model/Manager.php");
+require_once("model/Manager.php"); // Appel du fichier connexion bdd
 
 class CommentManager extends Manager
 {
+    // Requête pour afficher les commentaires associés au chapitre / jointure interne pour afficher le pseudo du membre
     public function getComments($postId)
     {
         $db = $this->dbConnect();
-        $comments = $db->prepare('SELECT membres.pseudo, comments.comment, comments.id, comments.user_id, comments.reported,
+        $comments = $db->prepare('SELECT members.pseudo, comments.comment, comments.id, comments.user_id, comments.reported,
         DATE_FORMAT(`comments`.`comment_date`, "%d/%m/%Y à %Hh%imin%ss") AS comment_date_fr 
-        FROM membres
+        FROM members
         INNER JOIN comments
-        ON comments.user_id = membres.id 
+        ON comments.user_id = members.id 
         WHERE post_id = ? 
         ORDER BY comments.comment_date DESC');
         $comments->execute(array($postId));
@@ -18,6 +19,7 @@ class CommentManager extends Manager
         return $comments;
     }
 
+    // Requête pour ajouter un commentaire 
     public function postComment($postId, $userId, $comment)
     {
         $db = $this->dbConnect();
@@ -27,6 +29,7 @@ class CommentManager extends Manager
         return $affectedLines;
     }
 
+    // Requête pour afficher le commentaire à modifier 
     public function getComment($id)
     {
         $db = $this->dbConnect();
@@ -37,6 +40,7 @@ class CommentManager extends Manager
         return $comment;
     }
 
+    // Requête pour modifier le commentaire
     public function updateComment($id, $comment)
     {
         $db = $this->dbConnect();
@@ -46,6 +50,7 @@ class CommentManager extends Manager
         return $newComment;
     }
 
+    // Requête pour supprimer un commentaire
     public function deleteComment($id)
     {
         $db = $this->dbConnect();
@@ -55,6 +60,7 @@ class CommentManager extends Manager
         return $delete;
     }
 
+    // Requête pour signaler un commentaire
     public function postReport($id) 
     {
         $db = $this->dbConnect();
@@ -64,6 +70,7 @@ class CommentManager extends Manager
         return $report;
     }
 
+    // Requête pour supprimer le signalement d'un commentaire / gestion administrateur
     public function deleteReport($id)
     {
         $db = $this->dbConnect();
@@ -73,14 +80,15 @@ class CommentManager extends Manager
         return $deleteReported;
     }
 
+    // Requête pour afficher les commentaires signalés / gestion administrateur
     public function reportedCommentAdmin()
     {
         $db = $this->dbConnect();
-        $reportedComments = $db->query('SELECT membres.pseudo, comments.comment, comments.id, comments.user_id, 
+        $reportedComments = $db->query('SELECT members.pseudo, comments.comment, comments.id, comments.user_id, 
         DATE_FORMAT(`comments`.`comment_date`, "%d/%m/%Y à %Hh%imin%ss") AS comment_date_fr
-        FROM membres
+        FROM members
         INNER JOIN comments
-        ON comments.user_id = membres.id 
+        ON comments.user_id = members.id 
         WHERE reported = 1
         ORDER BY comments.comment_date DESC');
         

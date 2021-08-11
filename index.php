@@ -19,6 +19,7 @@ try {
             }
         }
 
+        // Commentaires
         elseif ($_GET['action'] == 'viewAddComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 viewAddComment();
@@ -73,6 +74,13 @@ try {
             }
         }
 
+        elseif ($_GET['action'] == 'postReport') {
+            if (isset($_GET['id']) && isset($_GET['postId'])) {
+                postReport($_GET['id'], $_GET['postId']);
+            }
+        }
+
+        // Chapitres
         if ($_GET['action'] == 'viewAddPost') {
             viewAddPost();
         }
@@ -108,6 +116,7 @@ try {
             deletePost($_GET['id']);
         }
 
+        // Administrateur
         elseif ($_GET['action'] == 'listPostsAdmin') {
             listPostsAdmin();
         }
@@ -116,16 +125,11 @@ try {
             reportedCommentAdmin();
         }
 
-        elseif ($_GET['action'] == 'postReport') {
-            if (isset($_GET['id']) && isset($_GET['postId'])) {
-                postReport($_GET['id'], $_GET['postId']);
-            }
-        }
-
         elseif ($_GET['action'] == 'deleteReport') {
             deleteReport($_GET['id']);
         }
 
+        // Membres
         if ($_GET['action'] == 'connexion') {
             connexion();
         }
