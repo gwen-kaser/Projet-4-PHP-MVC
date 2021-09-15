@@ -1,15 +1,20 @@
-</DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
     <head>
         <meta charset = "utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <link
-        rel="stylesheet"
+        <link rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-        crossorigin="anonymous"
-        >
+        crossorigin="anonymous">
         <link href="public/css/style.css" rel="stylesheet" />
+        <!-- Interface TinyMCE -->
+        <script src="https://cdn.tiny.cloud/1/53qmu6y9mi92791k9acuh38ez8qw6iag6mgcjm560nrxrtpp/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+                selector: '.tiny-mce'
+            });
+        </script>
         <title><?= $title ?></title>
     </head>
     <body>
@@ -21,22 +26,28 @@
                             <a class="navbar-brand font-weight-light" href="index.php">Jean Forteroche</a>
                             <ul class="navbar-nav">
                                 <div class="text-white font-weight-light">
-                                    <?php if (isset($_SESSION['id']) AND isset($_SESSION['pseudo'])) {?>
-                                        Bonjour <?= $_SESSION['pseudo'];?>
+                                <!-- Condition si un membre se connecte -->
+                                    <?php if (isset($_SESSION['id']) && isset($_SESSION['pseudo'])) {?>
+                                        Bonjour <?= ucfirst($_SESSION['pseudo']);?>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="index.php?action=deconnexion">Se deconnecter</a>
                                             </li>
-                                    <?php  } else { ?>
+                                    <?php } else { ?>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="index.php?action=connexion">Se connecter</a>
                                             </li>
                                     <?php }?>
-                                    <?php if (isset($_SESSION['admin']) && isset($_SESSION['admin'])) {?>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="index.php?action=listPostsAdmin">Administrateur</a>
-                                            </li>
+                                    <!-- Condition si l'administrateur se connect -->
+                                    <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {?>
+                                        <div class="dropdown">
+                                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" 
+                                            aria-haspopup="true" aria-expanded="false">Administrateur</a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="index.php?action=listPostsAdmin">Gestion des chapitres</a>
+                                                <a class="dropdown-item" href="index.php?action=reportedCommentAdmin">Commentaires signalés</a>
+                                            </div>
+                                        </div>
                                     <?php }?>
-                                        
                                 </div>
                             </ul>
                         </nav>
@@ -48,17 +59,11 @@
         <footer>
             <div class="bg-danger mt-5">
                 <div class="container">
-                    <div class="row py-4 text-white text-center">
+                    <div class="row py-4 text-center">
                         <div class="col">
-                            <a class="fb-ic">
-                                <i class="fab fa-facebook-f fa-lg text-white mr-md-5 mr-3 fa-2x"></i>
-                            </a>
-                            <a class="tw-ic">
-                                <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"></i>
-                            </a>
-                            <a class="ins-ic">
-                                <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"></i><br/>
-                            </a>
+                            <a href=""><i class="fab fa-facebook-f fa-lg text-white mr-5 fa-2x"></i></a>
+                            <a href=""><i class="fab fa-twitter fa-lg text-white mr-5 fa-2x"></i></a>
+                            <a href=""><i class="fab fa-instagram fa-lg text-white fa-2x"></i><br/></a>
                         </div>
                     </div>
                 </div>
