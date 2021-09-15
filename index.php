@@ -1,35 +1,41 @@
 <?php
-session_start();
-require('controller/admin.php');
-require('controller/blog.php');
-require('controller/member.php');
 
+session_start();
+
+require 'controller/Autoloader.php'; 
+Autoloader::register(); 
+
+// Blog
 try {
     if (isset($_GET['action'])) {
+        
         if ($_GET['action'] == 'listPosts') {
-            listPosts();
+            $blog = new Blog();
+            $blog->listPosts();
         }
         
         elseif ($_GET['action'] == 'post') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                post();
+                $blog = new Blog();
+                $blog->post();
             }
             else {
                 throw new Exception ('Aucun identifiant de billet envoyé');
             }
         }
 
-        // Commentaires
         elseif ($_GET['action'] == 'viewAddComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                viewAddComment();
+                $blog = new Blog();
+                $blog->viewAddComment();
             }
         }
         
         elseif ($_GET['action'] == 'addComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 if (!empty($_SESSION['id']) && !empty($_POST['comment'])) {
-                    addComment($_GET['id'], $_SESSION['id'], $_POST['comment']);
+                    $blog = new Blog();
+                    $blog->addComment($_GET['id'], $_SESSION['id'], $_POST['comment']);
                 }
                 else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
@@ -42,7 +48,8 @@ try {
         
         elseif ($_GET['action'] == 'viewEditComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                viewEditComment();
+                $blog = new Blog();
+                $blog->viewEditComment();
             }
             else {
                 throw new Exeption('Aucun commentaire trouvé !');
@@ -52,7 +59,8 @@ try {
         elseif ($_GET['action'] == 'editComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 if (!empty($_POST['comment'])) {
-                    editComment($_GET['id'], $_POST['comment']);
+                    $blog = new Blog();
+                    $blog->editComment($_GET['id'], $_POST['comment']);
                 }
                 else {
                     throw new Exeption('Tous les champs ne sont pas remplis !');
@@ -66,7 +74,8 @@ try {
         elseif ($_GET['action'] == 'deleteComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 if (!empty($_GET['id'])) {
-                    deleteCom($_GET['id']);
+                    $blog = new Blog();
+                    $blog->deleteCom($_GET['id']);
                 }
                 else {
                     throw new Exeption('Vous n\'avez pas saisi tous les paramètres');
@@ -76,18 +85,26 @@ try {
 
         elseif ($_GET['action'] == 'postReport') {
             if (isset($_GET['id']) && isset($_GET['postId'])) {
-                postReport($_GET['id'], $_GET['postId']);
+                $blog = new Blog();
+                $blog->postReport($_GET['id'], $_GET['postId']);
             }
         }
 
-        // Chapitres
+        // Administrateur
+        elseif ($_GET['action'] == 'listPostsAdmin') {
+            $admin = new Admin();
+            $admin->listPostsAdmin();
+        }
+
         if ($_GET['action'] == 'viewAddPost') {
-            viewAddPost();
+            $admin = new Admin();
+            $admin->viewAddPost();
         }
         
         elseif ($_GET['action'] == 'addPost') {
-            if (!empty($_POST['title']) && !empty($_POST['author']) && !empty($_POST['content'])) {
-                addPost($_POST['title'], $_POST['author'], $_POST['content']);
+            if (!empty($_SESSION['id']) && !empty($_POST['title']) && !empty($_POST['content'])) {
+                $admin = new Admin();
+                $admin->addPost($_SESSION['id'], $_POST['title'], $_POST['content']);
             }
             else {
                 throw new Exception('Tous les champs ne sont pas remplis !');
@@ -96,7 +113,8 @@ try {
 
         elseif ($_GET['action'] == 'viewEditPost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                viewEditPost();
+                $admin = new Admin();
+                $admin->viewEditPost();
             }
             else {
                 throw new Exception ('Aucun identifiant de billet envoyé');
@@ -104,8 +122,9 @@ try {
         }
 
         elseif ($_GET['action'] == 'editPost') {
-            if (!empty($_POST['title']) && !empty($_POST['author']) && !empty($_POST['content'])) {
-                editPost($_GET['id'], $_POST['title'], $_POST['author'], $_POST['content']);
+            if (!empty($_POST['title']) && !empty($_POST['content'])) {
+                $admin = new Admin();
+                $admin->editPost($_GET['id'], $_POST['title'], $_POST['content']);
             }
             else {
                 throw new Exeption('Tous les champs ne sont pas remplis !');
@@ -113,30 +132,30 @@ try {
         }
 
         elseif ($_GET['action'] == 'deletePost') {
-            deletePost($_GET['id']);
-        }
-
-        // Administrateur
-        elseif ($_GET['action'] == 'listPostsAdmin') {
-            listPostsAdmin();
+            $admin = new Admin();
+            $admin->deletePost($_GET['id']);
         }
 
         elseif ($_GET['action'] == 'reportedCommentAdmin') {
-            reportedCommentAdmin();
+            $admin = new Admin();
+            $admin->reportedCommentAdmin();
         }
 
         elseif ($_GET['action'] == 'deleteReport') {
-            deleteReport($_GET['id']);
+            $admin = new Admin();
+            $admin->deleteReport($_GET['id']);
         }
 
         // Membres
         if ($_GET['action'] == 'connexion') {
-            connexion();
+            $member = new Member();
+            $member->connexion();
         }
 
         elseif ($_GET['action']== 'connexionUser') {
             if (isset($_POST['pseudo']) && isset($_POST['pass'])) {
-                connexionUser($_POST['pseudo'], $_POST['pass']);
+                $member = new Member();
+                $member->connexionUser($_POST['pseudo'], $_POST['pass']);
                 
             }
             else {
@@ -145,12 +164,14 @@ try {
         }
 
         if ($_GET['action'] == 'registration') {
-            registration();
+            $member = new Member();
+            $member->registration();
         }
 
         elseif ($_GET['action'] == 'saveUser') {
             if (isset($_POST['pseudo']) && isset($_POST['pass']) && isset($_POST['email'])) {
-                saveUser($_POST['pseudo'], $_POST['pass'], $_POST['email']);
+                $member = new Member();
+                $member->saveUser($_POST['pseudo'], $_POST['pass'], $_POST['email']);
             }
             else {
                 throw new Exception('Tous les champs ne sont pas remplis !');
@@ -158,12 +179,14 @@ try {
         }
 
         elseif ($_GET['action'] == 'deconnexion') {
-            deconnexion();
+            $member = new Member();
+            $member->deconnexion();
         }
         
     }
     else {
-        listPosts();
+        $blog = new Blog();
+        $blog->listPosts();   
     }
 }
 catch(Exception $e) {
