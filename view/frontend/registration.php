@@ -2,15 +2,14 @@
 
 <?php ob_start(); ?>
 
-    <div class="jumbotron" style="background: url(public/images/slider-2.jpg) no-repeat center center fixed; background-size: cover;" alt="Paysage Alaska">
-        <div class="row py-5 text-center text-white">
-            <div class="col">
-                <h2 class="display-4 font-weight-light">Billet simple pour l'Alaska</h2>
-                <h3 class="font-weight-light font-italic">de Jean Forteroche, auteur et écrivain</h3>
-            </div>
+    <div class="jumbotron jumbotron-fluid" style="background: url(public/images/alaska.jpg) no-repeat center center fixed; background-size: cover;" alt="Paysage Alaska">
+        <div class="container py-5 text-center text-white">
+            <h2 class="display-4 font-weight-light">Billet simple pour l'Alaska</h2>
+            <h3 class="font-weight-light font-italic">de Jean Forteroche, auteur et écrivain</h3>
         </div>
     </div>
-
+    
+    <!-- S'inscrire -->
     <div class="container pb-4">
     <p><a class="font-weight-light font-italic text-info" href= "index.php">Retour page d'accueil</a></p>
         <div class="row mt-5 justify-content-center text-danger font-weight-light border border-danger">

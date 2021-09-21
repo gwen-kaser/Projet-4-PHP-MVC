@@ -11,7 +11,13 @@ class Autoloader{
     // Inclue le fichier correspondant à notre classe @param $class string Le nom de la classe à charger
     
     static function autoload($class){
-        require 'controller/' . $class . '.php';
+        if (file_exists('controller/' . $class . '.php')) {
+            require 'controller/' . $class . '.php';
+        }
+        elseif (file_exists('model/' . $class . '.php')) {
+            require 'model/' . $class . '.php';
+        }
+        
     }
 
 }

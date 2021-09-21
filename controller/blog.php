@@ -1,115 +1,142 @@
 <?php
-require_once('model/PostManager.php');
-require_once('model/CommentManager.php');
 
-// Affichage des articles, accueil
-function listPosts()
+class Blog 
 {
-    $postManager = new PostManager(); // Création d'un objet
-    
-    $posts = $postManager->getPosts(); // Appel d'une fonction de cet objet
+    // Méthode pour afficher les chapitres / page d'accueil
+    public function listPosts()
+    {
+        $postManager = new PostManager(); 
+        $posts = $postManager->getPosts(); 
 
-    require('view/frontend/listPostsView.php');
-}
-
-// Méthode pour afficher un article avec le/les commentaires associés
-function post()
-{
-    $postManager = new PostManager();
-    $commentManager = new CommentManager();
-
-    $post = $postManager->getPost($_GET['id']);
-    $comments = $commentManager->getComments($_GET['id']);
-
-    require('view/frontend/postView.php');
-}
-
-// Page pour ajouter un commentaire
-function viewAddComment()
-{
-    require('view/frontend/addCommentView.php');
-}
-
-// Méthode pour ajouter un commentaire
-function addComment($postId, $userId, $comment)
-{
-    if(!isset($_SESSION['id'])) { // Sécurité pour que l'utilisateur soit bien un membre sinon dirigé vers la page de connexion
-        header('Location: index.php?action=connexion');
-        die();
+        require('view/frontend/listPostsView.php');
     }
-    
-    $commentManager = new CommentManager();
 
-    $affectedLines = $commentManager->postComment($postId, $userId, $comment);
+    // Méthode pour afficher un chapitre avec le/les commentaires associés
+    public function post()
+    {
+        $postManager = new PostManager();
+        $commentManager = new CommentManager();
 
-    if ($affectedLines === false) {
-        throw new Exception('Impossible d\'ajouter le commentaire !');
-    }
-    else {
-        header('Location: index.php?action=post&id=' . $postId);
-    }
-}
-
-// Page pour modifier un commentaire + récupérer celui-ci
-function viewEditComment()
-{
-    $commentManager = new CommentManager();
-
-    $comment = $commentManager->getComment($_GET['id']);
-
-    require('view/frontend/editCommentView.php');
-}
-
-// Méthode pour modifier un commentaire 
-function editComment($id, $comment)
-{
-    if(!isset($_SESSION['id'])) { // Sécurité pour que l'utilisateur soit bien un membre sinon dirigé vers la page de connexion
-        header('Location: index.php?action=connexion');
-        die();
-    }
-    if(isset($_SESSION['id'])) { // Sécurité bouton modifié uniquement pour l'administrateur et le membre qui à posté le commentaire 
-        if(isset($_SESSION['id']) == ($comment['user_id']) OR $_SESSION['admin'] == true) {
-
-            $commentManager =  new CommentManager();
-
-            $newComment = $commentManager->updateComment($id, $comment);
-                
-            if ($newComment == false) {
-                throw new Exeption('Impossible de modifier le commentaire !');
-            }
-            else {
-                echo 'commentaire :' . $_POST['comment'];
-                header('Location: index.php?action=post&id=' . $_GET['postId']);
-            }
+        $post = $postManager->getPost($_GET['id']);
+        
+        if(!$post) { // Sécurité si le chapitre n'existe pas redirection vers la page d'accueil
+            header('Location: index.php?action=listPosts');
         }
-    }
-}
+        
+        $comments = $commentManager->getComments($_GET['id']);
 
-// Méthode pour supprimer un commentaire
-function deleteCom($id)
-{
-    if(!isset($_SESSION['id'])) { // Sécurité pour que l'utilisateur soit bien un membre sinon dirigé vers la page de connexion
-        header('Location: index.php?action=connexion');
-        die();
+        require('view/frontend/postView.php');
     }
-    if(isset($_SESSION['id'])) { // Sécurité bouton supprimé uniquement pour l'administrateur et le membre qui à posté le commentaire
-        if(isset($_SESSION['id']) == ($comment['user_id']) OR $_SESSION['admin'] == true) {
 
+    // Méthode / page pour ajouter un commentaire
+    public function viewAddComment()
+    {
+        if(!isset($_SESSION['id'])) { // Sécurité si ce n'est pas un membre redirection vers la page de connexion
+            header('Location: index.php?action=connexion');
+            die();
+        }
+            require('view/frontend/addCommentView.php');
+    }
+
+    // Méthode pour ajouter un commentaire
+    public function addComment($postId, $userId, $comment)
+    {
+        if(!isset($_SESSION['id'])) { // Sécurité si ce n'est pas un membre redirection vers la page de connexion
+            header('Location: index.php?action=connexion');
+            die();
+        }
             $commentManager = new CommentManager();
 
-            $delete = $commentManager->deleteComment($id);
+            $affectedLines = $commentManager->postComment($postId, $userId, $comment);
 
-            header('Location: index.php?action=post&id=' . $_GET['postId']);
+        if($affectedLines === false) {
+            throw new Exception('Impossible d\'ajouter le commentaire !');
+        }
+        else {
+            header('Location: index.php?action=post&id=' . $postId);
         }
     }
-}
 
-// Méthode pour signaler un commentaire 
-function postReport($id, $postId)
-{
-    $commentManager = new CommentManager();
+    // Méthode pour récupérer le commentaire à modifier
+    public function viewEditComment()
+    {
+        if(!isset($_SESSION['id'])) { // Sécurité si ce n'est pas un membre redirection vers la page de connexion
+            header('Location: index.php?action=connexion');
+            die();
+        }
+        
+        if (isset($_SESSION['id'])) { // Vérification si l'utilisateur est connecté
+            $commentManager = new CommentManager();
+            $comment = $commentManager->getComment($_GET['id']); 
+            
+            if (($_SESSION['id']) == ($comment['user_id']) || $_SESSION['admin'] == true) { // Sécurité bouton modifié uniquement visible par l'administrateur et le membre qui à posté le commentaire
+                require('view/frontend/editCommentView.php');
+            }
+        }
+    }
 
-    $report = $commentManager->postReport($id);
+    // Méthode pour modifier un commentaire 
+    public function editComment($id, $comment)
+    {
+        if(!isset($_SESSION['id'])) { // Sécurité si ce n'est pas un membre redirection vers la page de connexion
+            header('Location: index.php?action=connexion');
+            die();
+        }
 
-    header('Location: index.php?action=post&id='. $postId);
+        if (isset($_SESSION['id'])) { // Vérification si l'utilisateur est connecté
+            $commentManager = new CommentManager();
+            $oldComment = $commentManager->getComment($id); 
+            
+            if(!$oldComment) { // Sécurité si le commentaire n'existe pas ou que le membre n'est pas l'auteur redirection vers la page d'accueil
+                header('Location: index.php?action=listPostsView');
+            }
+            
+            if (($_SESSION['id']) == ($oldComment['user_id']) || $_SESSION['admin'] == true) { // Sécurité bouton modifié uniquement visible par l'administrateur et le membre qui à posté le commentaire 
+                $newComment = $commentManager->updateComment($id, $comment);
+                        
+                if ($newComment == false) {
+                    throw new Exeption('Impossible de modifier le commentaire !');
+                }
+                else {
+                    echo 'commentaire :' . $_POST['comment'];
+                    header('Location: index.php?action=post&id=' . $_GET['postId']);
+                }
+            }
+        }
+    }
+
+    // Méthode pour supprimer un commentaire
+    public function deleteCom($id)
+    {
+        if(!isset($_SESSION['id'])) { // Sécurité si ce n'est pas un membre redirection vers la page de connexion
+            header('Location: index.php?action=connexion');
+            die();
+        }
+        
+        if (isset($_SESSION['id'])) { // Vérification si l'utilisateur est connecté
+            $commentManager = new CommentManager();
+            $oldComment = $commentManager->getComment($id); 
+            
+            if (($_SESSION['id']) == ($oldComment['user_id']) || $_SESSION['admin'] == true) { // Sécurité bouton supprimé uniquement visible par l'administrateur et le membre qui à posté le commentaire
+                $delete = $commentManager->deleteComment($id);
+        
+                if (isset($_SESSION['admin']) && $_SESSION['admin'] == false) { // Redirection page chapitre si ce n'est pas l'administrateur qui supprime le commentaire
+                    header('Location: index.php?action=post&id=' . $_GET['postId']);
+                }
+                elseif (isset($_SESSION['admin']) && $_SESSION['admin'] == true) { // Redirection page gestion commentaires adminitrateur si celui-ci supprime un commentaire
+                    header('Location: index.php?action=reportedCommentAdmin');
+                }
+            }
+        }
+    }
+
+    // Méthode pour signaler un commentaire 
+    public function postReport($id, $postId)
+    {
+        $commentManager = new CommentManager();
+
+        $report = $commentManager->postReport($id);
+
+        header('Location: index.php?action=post&id='. $postId);
+    }
 }

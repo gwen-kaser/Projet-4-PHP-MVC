@@ -1,4 +1,5 @@
 <?php
+
 require_once("model/Manager.php"); // Appel du fichier connexion bdd
 
 class CommentManager extends Manager
@@ -33,7 +34,7 @@ class CommentManager extends Manager
     public function getComment($id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE id = ?');
+        $req = $db->prepare('SELECT id, user_id, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE id = ?');
         $req->execute(array($id));
         $comment = $req->fetch();
     
