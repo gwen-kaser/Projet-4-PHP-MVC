@@ -5,7 +5,7 @@
 <!-- Accueil -->
 <div class="embed-responsive embed-responsive-16by9">
         <video autoplay muted loop>
-            <source src="public/images/home.mp4" type="video/mp4" alt="Vidéo livre">
+            <source src="public/images/home.mp4" type="video/mp4">
         </video>
         <div class="card-img-overlay d-flex flex-column my-auto align-items-center justify-content-center text-center text-white">
             <h1 class="display-3 font-weight-light">Jean Forteroche</h1>
@@ -28,7 +28,7 @@
     <div class="container py-4">
         <div class="row my-5 px-5 border border-danger text-danger shadow">
             <div class="col-12 col-md-6 col-lg-5 my-4 pt-5">
-                <img class="d-block w-50 border border-danger" src="public/images/portrait.jpg" class="img-fluid" alt="Potrait">
+                <img class="img-fluid d-block w-50 border border-danger" src="public/images/portrait.jpg" alt="Potrait">
             </div>
             <div class="col-12 col-md-6 col-lg-7 my-4">
                 <h3 class="font-weight-light">Jean Forteroche</h3>
@@ -43,7 +43,7 @@
         </div>
     </div>
     
-    <div class="jumbotron jumbotron-fluid my-5" style="background: url(public/images/alaska.jpg) no-repeat center center fixed; background-size: cover;" alt="Paysage Alaska">
+    <div class="jumbotron jumbotron-fluid my-5" style="background: url(public/images/alaska.jpg) no-repeat center center fixed; background-size: cover;">
         <div class="container text-center text-white py-5 my-5">
                 <h2 class="display-4 font-weight-light">Billet simple pour l'Alaska</h2>
                 <h3 class=" font-weight-light font-italic">de Jean Forteroche, auteur et écrivain</h3>

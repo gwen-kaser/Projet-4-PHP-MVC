@@ -28,31 +28,30 @@
                     <div class="row">
                         <nav class="col navbar navbar-expend-lg navbar-dark">
                             <a class="navbar-brand font-weight-light" href="index.php">Jean Forteroche</a>
-                            <ul class="navbar-nav">
-                                <div class="text-white font-weight-light">
+                            <ul class="navbar-nav text-white font-weight-light">
+                                
                                 <!-- Condition si un membre se connecte -->
-                                    <?php if (isset($_SESSION['id']) && isset($_SESSION['pseudo'])) {?>
-                                        Bonjour <?= ucfirst($_SESSION['pseudo']);?>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="index.php?action=deconnexion">Se deconnecter</a>
-                                            </li>
-                                    <?php } else { ?>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="index.php?action=connexion">Se connecter</a>
-                                            </li>
-                                    <?php }?>
-                                    <!-- Condition si l'administrateur se connect -->
-                                    <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {?>
-                                        <div class="dropdown">
-                                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" 
-                                            aria-haspopup="true" aria-expanded="false">Administrateur</a>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="index.php?action=listPostsAdmin">Gestion des chapitres</a>
-                                                <a class="dropdown-item" href="index.php?action=reportedCommentAdmin">Commentaires signalés</a>
-                                            </div>
+                                <?php if (isset($_SESSION['id']) && isset($_SESSION['pseudo'])) {?>
+                                    Bonjour <?= ucfirst($_SESSION['pseudo']);?>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="index.php?action=deconnexion">Se deconnecter</a>
+                                        </li>
+                                <?php } else { ?>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="index.php?action=connexion">Se connecter</a>
+                                        </li>
+                                <?php }?>
+                                    
+                                <!-- Condition si l'administrateur se connect -->
+                                <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {?>
+                                    <div class="dropdown">
+                                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrateur</a>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="index.php?action=listPostsAdmin">Gestion des chapitres</a>
+                                            <a class="dropdown-item" href="index.php?action=reportedCommentAdmin">Commentaires signalés</a>
                                         </div>
-                                    <?php }?>
-                                </div>
+                                    </div>
+                                <?php }?>
                             </ul>
                         </nav>
                     </div>
