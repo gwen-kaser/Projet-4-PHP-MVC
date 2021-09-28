@@ -8,7 +8,7 @@ class Member
         require('view/frontend/connexion.php');
     }
 
-    // Méthode pour reconnaître le membre déjà inscrit 
+    // Méthode pour identifier le membre déjà inscrit 
     public function connexionUser($pseudo, $pass)
     {
         $memberManager = new MemberManager();
