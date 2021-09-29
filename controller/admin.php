@@ -15,7 +15,7 @@ class Admin
         }
     }
 
-    // Méthode / page pour ajouter un chapitre
+    // Méthode / accès page ajout chapitre
     public function viewAddPost ()
     {
         if(isset($_SESSION['admin']) && $_SESSION['admin'] == true) { // Sécurité pour que uniquement l'admin puisse ajouter un chapitre
@@ -81,7 +81,7 @@ class Admin
         }
     }
 
-    // Méthode pour afficher le/les commentaires signalés
+    // Méthode pour afficher le/les commentaires signalés 
     public function reportedCommentAdmin()
     {
         if(isset($_SESSION['admin']) && $_SESSION['admin'] == true) { // Sécurité pour que uniquement l'admin puisse voir la liste de la gestion des commentaires signalés

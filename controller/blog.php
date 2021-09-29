@@ -28,7 +28,7 @@ class Blog
         require('view/frontend/postView.php');
     }
 
-    // Méthode / page pour ajouter un commentaire
+    // Méthode / accès page ajout commentaire
     public function viewAddComment()
     {
         if(!isset($_SESSION['id'])) { // Sécurité si ce n'est pas un membre redirection vers la page de connexion
