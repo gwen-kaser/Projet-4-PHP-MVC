@@ -32,7 +32,7 @@
                                 
                                 <!-- Condition si un membre se connecte -->
                                 <?php if (isset($_SESSION['id']) && isset($_SESSION['pseudo'])) {?>
-                                    Bonjour <?= ucfirst($_SESSION['pseudo']);?>
+                                    Bonjour <?= ucwords($_SESSION['pseudo']);?>
                                         <li class="nav-item">
                                             <a class="nav-link" href="index.php?action=deconnexion">Se deconnecter</a>
                                         </li>
