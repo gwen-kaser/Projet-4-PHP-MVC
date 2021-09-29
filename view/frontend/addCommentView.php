@@ -2,7 +2,7 @@
 
 <?php ob_start(); ?>
 
-    <div class="jumbotron jumbotron-fluid" style="background: url(public/images/alaska.jpg) no-repeat center center fixed; background-size: cover;" alt="Paysage Alaska">
+    <div class="jumbotron jumbotron-fluid" style="background: url(public/images/alaska.jpg) no-repeat center center fixed; background-size: cover;">
         <div class="container text-center text-white py-5 my-5">
                 <h2 class="display-4 font-weight-light">Billet simple pour l'Alaska</h2>
                 <h3 class=" font-weight-light font-italic">de Jean Forteroche, auteur et écrivain</h3>

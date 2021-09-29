@@ -2,10 +2,10 @@
 
 <?php ob_start(); ?>
 
-    <div class="jumbotron jumbotron-fluid" style="background: url(public/images/alaska.jpg) no-repeat center center fixed; background-size: cover;" alt="Paysage Alaska">
+    <div class="jumbotron jumbotron-fluid" style="background: url(public/images/alaska.jpg) no-repeat center center fixed; background-size: cover;">
         <div class="container py-5 text-center text-white">
             <h2 class="display-4 font-weight-light">Billet simple pour l'Alaska</h2>
-            <h3 class="font-weight-light font-italic">de Jean Forteroche, auteur et écrivain</h3></br>
+            <h3 class="font-weight-light font-italic">de Jean Forteroche, auteur et écrivain</h3><br/>
             <h4 class="font-weight-light">Vous pouvez<span class="font-italic"> supprimer, modifier et ajouter</span> un chapitre</h4> 
         </div>
     </div>
@@ -45,7 +45,7 @@ $posts->closeCursor();
 ?>
     <!-- Bouton d'ajout d'un chapitre -->
     <div class="text-center">
-        <a href="index.php?action=viewAddPost"><input class="text-white btn-info btn-sm shadow" type="button" value="Ajouter un chapitre"></a>
+        <a href="index.php?action=viewAddPost" class="btn btn-info btn-sm border-danger shadow active" role="button" aria-pressed="true">Ajouter un chapitre</a>
     </div>
    
 <?php $content = ob_get_clean(); ?>

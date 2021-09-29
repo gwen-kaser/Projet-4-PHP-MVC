@@ -2,7 +2,7 @@
 
 <?php ob_start(); ?>
 
-    <div class="jumbotron jumbotron-fluid" style="background: url(public/images/alaska.jpg) no-repeat center center fixed; background-size: cover;" alt="Paysage Alaska">
+    <div class="jumbotron jumbotron-fluid" style="background: url(public/images/alaska.jpg) no-repeat center center fixed; background-size: cover;">
         <div class="container py-5 text-center text-white">
             <h2 class="display-4 font-weight-light">Billet simple pour l'Alaska</h2>
             <h3 class="font-weight-light font-italic">de Jean Forteroche, auteur et écrivain</h3>
@@ -37,7 +37,7 @@
                 <p class="font-weight-light font-italic text-danger pt-3"><?= ucfirst(htmlspecialchars($comment['pseudo'])) ?> le <?= $comment['comment_date_fr']?></p>
                 <p><?= nl2br(htmlspecialchars($comment['comment'])) ?></p>
         
-        <!-- Condition si l'administrateur et le membre qui à commenté est connecté les boutons apparaîssent -->        
+        <!-- Condition si l'administrateur et l'auteur du commentaire est connecté les boutons apparaîssent -->        
         <?php if (isset($_SESSION['id'])) { ?>
             <?php if (($_SESSION['id']) == ($comment['user_id']) || $_SESSION['admin'] == true) { ?>
                 <a class="font-weight-light font-italic text-info" href="index.php?action=viewEditComment&amp;id=<?= $comment['id'] ?>&postId=<?= $post['id']?>">Modifier</a> |
@@ -47,9 +47,9 @@
         
         <!-- Condition si un commentaire est signalé la couleur de l'incon change -->
         <?php if ($comment['reported'] == 1) { ?>
-            <a href="index.php?action=postReport&amp;id=<?=$comment['id']?>&postId=<?= $post['id']?>"><i class="fas fa-flag text-danger"></i></a></p>
+            <a href="index.php?action=postReport&amp;id=<?=$comment['id']?>&postId=<?= $post['id']?>"><i class="fas fa-flag text-danger"></i></a>
         <?php } else { ?>
-            <a href="index.php?action=postReport&amp;id=<?=$comment['id']?>&postId=<?= $post['id']?>"><i class="fas fa-flag text-info"></i></a></p>
+            <a href="index.php?action=postReport&amp;id=<?=$comment['id']?>&postId=<?= $post['id']?>"><i class="fas fa-flag text-info"></i></a>
         <?php } ?>
     <?php } ?> 
             </div>
@@ -59,11 +59,11 @@
     <!-- Condition si le membre est connecté il peut ajouter un commentaire -->
     <?php if (isset($_SESSION['id'])) { ?>
         <div class="text-center pb-4">
-            <a href="index.php?action=viewAddComment&amp;id=<?= $post['id']?>"><input class="text-white btn-info btn-sm shadow" type="button" value="Ajoutez votre commentaire !"></a>
+            <a href="index.php?action=viewAddComment&amp;id=<?= $post['id']?>" class="btn btn-info btn-sm border-danger shadow active" role="button" aria-pressed="true">Ajoutez votre commentaire !</a>
         </div>
     <?php } else { ?>
-        <div class="text-center pb-5">
-            <a href="index.php?action=connexion"><input class="text-white btn-info btn-sm shadow" type="button" value="Connectez-vous si vous souhaitez ajouter un commentaire"></a>
+        <div class="text-center pb-5">  
+            <a href="index.php?action=connexion" class="btn btn-info btn-sm border-danger shadow active" role="button" aria-pressed="true">Connectez-vous si vous souhaitez ajouter un commentaire</a>
         </div>
     <?php } ?>
 
